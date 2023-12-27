@@ -1,0 +1,30 @@
+services:
+  sql:
+    image: mcr.microsoft.com/azure-sql-edge
+    environment:
+      - ACCEPT_EULA=1
+      - MSSQL_SA_PASSWORD=your_password123
+      - MSSQL_PID=Developer
+      - MSSQL_USER=SA
+    container_name: sql
+    ports:
+      - 1433:1433
+    volumes:
+      - sqlvolume:/var/opt/mssql
+    network_mode: multiapp-network
+
+  azure-demo-app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    env_file:
+      - ./.env
+    container_name: azure-demo-app
+    network_mode: multiapp-network
+    ports:
+      - 8085:8080
+    depends_on:
+      - sql
+
+volumes:
+  sqlvolume:
