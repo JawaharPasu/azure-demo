@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sql-persistentvolumeclaim
+  labels:
+    sql: sql-server
+spec:
+  volumeName: sql-persistentvolume
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard
+  resources:
+    requests:
+      storage: 1Gi

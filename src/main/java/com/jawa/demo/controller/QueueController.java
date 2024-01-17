@@ -7,6 +7,7 @@ import com.azure.storage.queue.models.SendMessageResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("queue")
+@ConditionalOnProperty(prefix = "azure", name = "queue")
 public class QueueController {
 
     private final static Logger logger = LoggerFactory.getLogger(QueueController.class);

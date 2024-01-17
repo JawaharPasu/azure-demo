@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sql-environment
+  labels:
+    sql: sql-server
+data:
+  accept-eula: '1'
+  password: 'your_password123'
+  pid: 'Developer'
+  user: 'SA'

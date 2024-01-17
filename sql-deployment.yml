@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sql-deployment
+  labels:
+    sql: sql-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      sql: sql-server
+  template:
+    metadata:
+      name: sql-deployment
+      labels:
+        sql: sql-server
+    spec:
+      containers:
+        - name: sql-server
+          image: mcr.microsoft.com/azure-sql-edge:latest
+          volumeMounts:
+            - mountPath: /var/opt/mssql
+              name: sql-volume
+          env:
+            - name: ACCEPT_EULA
+              valueFrom:
+                configMapKeyRef:
+                  name: sql-environment
+                  key: accept-eula
+            - name: MSSQL_SA_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: sql-environment
+                  key: password
+            - name: MSSQL_PID
+              valueFrom:
+                configMapKeyRef:
+                  name: sql-environment
+                  key: pid
+            - name: MSSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: sql-environment
+                  key: user
+      volumes:
+        - name: sql-volume
+          persistentVolumeClaim:
+            claimName: sql-persistentvolumeclaim
+

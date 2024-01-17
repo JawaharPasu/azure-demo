@@ -3,6 +3,7 @@ package com.jawa.demo.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.WritableResource;
 import org.springframework.util.StreamUtils;
@@ -14,6 +15,7 @@ import java.nio.charset.Charset;
 
 @RestController
 @RequestMapping("blob")
+@ConditionalOnProperty(prefix = "azure", name = "blob")
 public class BlobController {
 
     private final static Logger logger = LoggerFactory.getLogger(BlobController.class);
